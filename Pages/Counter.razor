@@ -8,10 +8,10 @@
 
 @code {
     private int currentCount = 0;
-
-    public int incrementAmount {get; set} = 1;
-
     
+    //needed, otherwise it wont recognise as a prop
+    [ParameterAttribute]
+    public int incrementAmount {get; set;} = 1;    
 
     private void IncrementCount()
     {
