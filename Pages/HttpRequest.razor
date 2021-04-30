@@ -1,0 +1,55 @@
+﻿@page "/httpRequest"
+@using System.Net.Http.Json
+
+<h1>JSON Placeholder Example</h1>
+
+<p>This component demonstrates fetching data from a Web-Service.</p>
+<a href="https://jsonplaceholder.typicode.com/posts">https://jsonplaceholder.typicode.com/posts</a>
+
+@if (posts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Message ID</th>
+                <th>Message Title</th>
+                <th>Message Body</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var post in posts)
+            {
+                <tr>
+                    <td>@post.UserId</td>
+                    <td>@post.Id</td>
+                    <td>@post.Title</td>
+                    <td>@post.Body</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Posts[] posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var http = new HttpClient();
+        posts = await http.GetFromJsonAsync<Posts[]>("https://jsonplaceholder.typicode.com/posts");
+    }
+
+
+    public class Posts
+    {
+        public int UserId { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Body { get; set; }
+    }
+}
